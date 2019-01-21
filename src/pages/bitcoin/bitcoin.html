@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bitcoin</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-img src="assets/imgs/Bitcoin.svg"></ion-img>
+    </ion-row>
+    <ion-row justify-content-center>
+      <div *ngIf="bitcoin$ | async as bc; else loading" text-center>
+        <h1>BTC: {{bc.ask | currency: currency + " "}}</h1>
+        <p>The average price last week was: </p>
+        <p>{{bc.averages.week | currency: currency + " "}}</p>
+        <h1>VER O QUE MUDA EM CADA UM, FAZER UM TEMPLATE E USAR O JSON PARA GUARDAR AS VAR QUE SAO DIFERENTES ENTRE ELES</h1>
+        <h1>MAIS DINAMICO</h1>
+      </div>
+      <ng-template #loading>
+        <h1>LOADING...</h1>
+      </ng-template>
+    </ion-row>
+    <ion-row justify-content-center>
+      <button ion-button icon-only round outline (click)="getBitcoinPrice()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-label>Select currency:</ion-label>
+    <ion-select [(ngModel)]="currency" (ionChange)="getBitcoinPrice()">
+      <ion-option value="EUR">EUR</ion-option>
+      <ion-option value="USD">USD</ion-option>
+      <ion-option value="GBP">GBP</ion-option>
+      <ion-option value="CHF">CHF</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-footer>
